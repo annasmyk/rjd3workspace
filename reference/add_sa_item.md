@@ -83,7 +83,7 @@ rws$processing$sap1$series_4
 #> [1] ""
 #> 
 #> $id
-#> [1] "8a44859a-e582-4dd4-ba95-273e4fb5919e"
+#> [1] "aac80eec-14b2-46ef-8726-a4c7a1633e45"
 #> 
 #> attr(,"class")
 #> [1] "JD3_TSMONIKER"
@@ -170,7 +170,7 @@ rws$processing$sap1$series_4
 #> attr(,"class")
 #> [1] "JD3_TS"
 #> 
-#> $domainSpec
+#> $referenceSpec
 #> Specification
 #> 
 #> Series
@@ -274,7 +274,7 @@ rws$processing$sap1$series_4
 #> Is enabled: No
 #> 
 #> 
-#> $pointSpec
+#> $resultSpec
 #> Specification
 #> 
 #> Series
