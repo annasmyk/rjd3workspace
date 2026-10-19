@@ -8,7 +8,7 @@ Refresh a Workspace or SA-Processing
 jsap_refresh(
   jsap,
   policy = c("FreeParameters", "Complete", "Outliers_StochasticComponent", "Outliers",
-    "FixedParameters", "FixedAutoRegressiveParameters", "Fixed"),
+    "FixedParameters", "FixedAutoRegressiveParameters", "Fixed", "Current"),
   period = 0,
   start = NULL,
   end = NULL,
@@ -18,7 +18,7 @@ jsap_refresh(
 jws_refresh(
   jws,
   policy = c("FreeParameters", "Complete", "Outliers_StochasticComponent", "Outliers",
-    "FixedParameters", "FixedAutoRegressiveParameters", "Fixed"),
+    "FixedParameters", "FixedAutoRegressiveParameters", "Fixed", "Current"),
   period = 0,
   start = NULL,
   end = NULL,
@@ -43,10 +43,14 @@ jws_refresh(
 
 - info:
 
-  indication on how data should be refreshed `All`: data and metadata
-  will be refreshed (default) `Data`: data will be refreshed, not
-  metadata `None`: nor data neither metadata will be refreshed, to be
-  used for updating specifications only.
+  indication on how data should be refreshed
+
+  - `All`: data and metadata will be refreshed (default)
+
+  - `Data`: data will be refreshed, not metadata
+
+  - `None`: nor data neither metadata will be refreshed, to be used for
+    updating specifications only.
 
 - jws, jsap:
 
@@ -106,13 +110,23 @@ More information on revision policies in JDemetra+ documentation:
 ## Examples
 
 ``` r
+
 # Load workspace
-file <- system.file("workspaces", "workspace_test_refresh.xml", package = "rjd3workspace")
+file <- system.file("workspaces", "workspace_test_refresh.xml",
+                    package = "rjd3workspace")
+
 # \donttest{
 jws <- jws_open(file)
+txt_update_path(
+    jws = jws,
+    new_path = system.file("extdata", "IPI_nace4.csv",
+                           package = "rjd3workspace")
+)
 jws_compute(jws)
+
 # Read current workspace: reference spec and estimation spec
-rws <- read_workspace(jws, compute= TRUE)
+jws1 <- jws_make_copy(jws)
+rws <- read_workspace(jws1, compute = TRUE)
 rws$processing$`SAProcessing-1`$`RF0811`$referenceSpec
 #> Specification
 #> 
@@ -165,6 +179,8 @@ rws$processing$`SAProcessing-1`$`RF0811`$referenceSpec
 #> Nb of forecasts: -1
 #> Nb of backcasts: 0
 #> Calendar sigma: NONE
+#> Mode X-11: UNKNOWN
+#> Bias: RATIO
 #> 
 #> Benchmarking
 #> Is enabled: No
@@ -227,6 +243,8 @@ rws$processing$`SAProcessing-1`$`RF0811`$estimationSpec
 #> Nb of forecasts: -2
 #> Nb of backcasts: 0
 #> Calendar sigma: NONE
+#> Mode X-11: MULTIPLICATIVE
+#> Bias: RATIO
 #> 
 #> Benchmarking
 #> Enabled: Yes
@@ -235,10 +253,13 @@ rws$processing$`SAProcessing-1`$`RF0811`$estimationSpec
 #> Rho: 1 (Auto)
 #> Bias: BIAS_NONE (Auto)
 #> Use forecast: Yes
+
 # Refresh workspace COMPLETE
-jws_refresh(jws, policy = "Complete")
+jws2 <- jws_make_copy(jws)
+jws_refresh(jws2, policy = "Complete")
+
 # Read refreshed workspace: new estimation spec
-rws2 <- read_workspace(jws, compute= TRUE)
+rws2 <- read_workspace(jws2, compute = TRUE)
 rws2$processing$`SAProcessing-1`$`RF0811`$estimationSpec
 #> Specification
 #> 
@@ -291,15 +312,18 @@ rws2$processing$`SAProcessing-1`$`RF0811`$estimationSpec
 #> Nb of forecasts: -1
 #> Nb of backcasts: 0
 #> Calendar sigma: NONE
+#> Mode X-11: UNKNOWN
+#> Bias: RATIO
 #> 
 #> Benchmarking
 #> Is enabled: No
+
 # Refresh workspace Outliers (like "lastoutliers in the GUI, but with custom start date)
-jws <- jws_open(file)
-jws_compute(jws)
-jws_refresh(jws, policy = "Outliers", period=12, end=c(2020,4))
+jws3 <- jws_make_copy(jws)
+jws_refresh(jws3, policy = "Outliers", period = 12, end = c(2020, 4))
+
 # Read refreshed workspace: new estimation spec
-rws3 <- read_workspace(jws, compute= TRUE)
+rws3 <- read_workspace(jws3, compute = TRUE)
 rws3$processing$`SAProcessing-1`$`RF0811`$estimationSpec
 #> Specification
 #> 
@@ -358,6 +382,8 @@ rws3$processing$`SAProcessing-1`$`RF0811`$estimationSpec
 #> Nb of forecasts: -2
 #> Nb of backcasts: 0
 #> Calendar sigma: NONE
+#> Mode X-11: MULTIPLICATIVE
+#> Bias: RATIO
 #> 
 #> Benchmarking
 #> Enabled: Yes

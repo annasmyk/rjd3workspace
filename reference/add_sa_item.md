@@ -41,11 +41,12 @@ add_sa_item(jsap, name, x, spec)
 
 ## Value
 
-`NULL` returned invisibly
+`NULL` returned invisibly#'
 
 ## Examples
 
 ``` r
+
 dir <- tempdir()
 
 # Raw series
@@ -83,7 +84,7 @@ rws$processing$sap1$series_4
 #> [1] ""
 #> 
 #> $id
-#> [1] "6a7526b5-5dfb-456d-90b9-52e91485643c"
+#> [1] "83241aa4-1110-48c7-8eba-4e196c21e34d"
 #> 
 #> attr(,"class")
 #> [1] "JD3_TSMONIKER"
@@ -201,7 +202,11 @@ rws$processing$sap1$series_4
 #> User-defined variables: No
 #> 
 #> Outliers
-#> Is enabled: No
+#> Detection span: ALL
+#> Outliers type: ao, ls, tc
+#> Critical value: 0 (Auto)
+#> TC rate: 0,7 (Auto)
+#> EML estimation: No
 #> 
 #> ARIMA
 #> SARIMA model: (0,1,1) (0,1,1)
@@ -217,6 +222,9 @@ rws$processing$sap1$series_4
 #> Seasonal tolerance: 2
 #> Seasonal boundary: 0.8
 #> Method: ALG_BURMAN
+#> Forecasts: -2
+#> Backcasts: 0
+#> Bias: TRUE
 #> 
 #> Benchmarking
 #> Is enabled: No
@@ -253,7 +261,11 @@ rws$processing$sap1$series_4
 #> User-defined variables: No
 #> 
 #> Outliers
-#> Is enabled: No
+#> Detection span: ALL
+#> Outliers type: ao, ls, tc
+#> Critical value: 0 (Auto)
+#> TC rate: 0,7 (Auto)
+#> EML estimation: No
 #> 
 #> ARIMA
 #> SARIMA model: (0,1,1) (0,1,1)
@@ -269,6 +281,9 @@ rws$processing$sap1$series_4
 #> Seasonal tolerance: 2
 #> Seasonal boundary: 0.8
 #> Method: ALG_BURMAN
+#> Forecasts: -2
+#> Backcasts: 0
+#> Bias: TRUE
 #> 
 #> Benchmarking
 #> Is enabled: No
@@ -307,7 +322,10 @@ rws$processing$sap1$series_4
 #> User-defined variables: No
 #> 
 #> Outliers
-#> Is enabled: No
+#> Detection span: ALL
+#> Critical value: 0 (Auto)
+#> TC rate: 0,7 (Auto)
+#> EML estimation: No
 #> 
 #> ARIMA
 #> SARIMA model: (0,1,1) (0,1,1)
@@ -323,6 +341,9 @@ rws$processing$sap1$series_4
 #> Seasonal tolerance: 2
 #> Seasonal boundary: 0.8
 #> Method: ALG_BURMAN
+#> Forecasts: -2
+#> Backcasts: 0
+#> Bias: TRUE
 #> 
 #> Benchmarking
 #> Is enabled: No
@@ -348,5 +369,6 @@ rws$processing$sap1$series_4
 
 # Writing the workspace
 save_workspace(jws, file.path(dir, "workspace.xml"))
+#> The workspace will be written to /tmp/RtmpYSRfyq/workspace.xml.
 # }
 ```
